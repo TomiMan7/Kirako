@@ -13,27 +13,41 @@ import java.util.List;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
-    List<Integer> list = new ArrayList<>();
+    public List<Integer> list = new ArrayList<>();
+    public int[] finish = new int[9];
 
-    int buttonPressCount = 0;
+    public int buttonPressCount = 0;
+    public String pressedButtonText0 = "9";
+    public String pressedButtonText1 = "9";
 
-    Button newGame = new Button("New Game!");
-    Button button0 = new Button("0");
-    Button button1 = new Button("1");
-    Button button2 = new Button("2");
-    Button button3 = new Button("3");
-    Button button4 = new Button("4");
-    Button button5 = new Button("5");
-    Button button6 = new Button("6");
-    Button button7 = new Button("7");
-    Button button8 = new Button("8");
+    public String buttonId;
+
+    public Button newGame = new Button("New Game!");
+    public Button button0 = new Button();
+    public Button button1 = new Button();
+    public Button button2 = new Button();
+    public Button button3 = new Button();
+    public Button button4 = new Button();
+    public Button button5 = new Button();
+    public Button button6 = new Button();
+    public Button button7 = new Button();
+    public Button button8 = new Button();
 
     public void ButtonShuffle()
     {
+        list.clear();
         for(int i = 0; i< 9; i++)
             list.add(i);
 
         Collections.shuffle(list);
+
+        for(int i = 0; i<9; i++)
+            finish[i] = list.get(i);
+
+        for(int i = 0; i<9; i++){
+           System.out.print(finish[i] + " ");}
+
+        System.out.print("\n");
 
         button0.setText(String.valueOf(list.get(0)));
         button1.setText(String.valueOf(list.get(1)));
@@ -46,6 +60,58 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button8.setText(String.valueOf(list.get(8)));
     }
 
+    public void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button) //siker ellenorzese meg hianyzik, csak egymas mellett levo szamok cserejenek ellenorzese is hianyik
+    {
+        System.out.println("\n"+pressedButtonText0);
+        System.out.println(pressedButtonText1);
+        System.out.println(buttonId + "\n");
+
+        buttonPressCount = 0;
+
+        if(pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
+
+            String temp;
+            temp = String.valueOf( finish[Integer.valueOf(button.getId())]);
+            finish[Integer.valueOf(button.getId())] = Integer.valueOf(pressedButtonText0);
+            finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
+
+            for(int i = 0; i<9; i++){
+            System.out.print(finish[i] + " ");}
+
+
+            button.setText(pressedButtonText0);
+
+            if (button0.getId() == buttonId)
+                button0.setText(pressedButtonText1);
+
+            if (button1.getId() == buttonId)
+                button1.setText(pressedButtonText1);
+
+            if (button2.getId() == buttonId)
+                button2.setText(pressedButtonText1);
+
+            if (button3.getId() == buttonId)
+                button3.setText(pressedButtonText1);
+
+            if (button4.getId() == buttonId)
+                button4.setText(pressedButtonText1);
+
+            if (button5.getId() == buttonId)
+                button5.setText(pressedButtonText1);
+
+            if (button6.getId() == buttonId)
+                button6.setText(pressedButtonText1);
+
+            if (button7.getId() == buttonId)
+                button7.setText(pressedButtonText1);
+
+            if (button8.getId() == buttonId)
+                button8.setText(pressedButtonText1);
+        }
+        else
+            System.out.println("ervenytelen lepes");
+           //kis felugro ablak h ervenytelen lepes
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -62,41 +128,47 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button0.setPrefSize(77,77);
         button0.setLayoutX(20);
         button0.setLayoutY(100);
+        button0.setId("0");
 
         button1.setPrefSize(77,77);
         button1.setLayoutX(100);
         button1.setLayoutY(100);
+        button1.setId("1");
 
         button2.setPrefSize(77,77);
         button2.setLayoutX(180);
         button2.setLayoutY(100);
+        button2.setId("2");
         //
         button3.setPrefSize(77,77);
         button3.setLayoutX(20);
         button3.setLayoutY(180);
+        button3.setId("3");
 
         button4.setPrefSize(77,77);
         button4.setLayoutX(100);
         button4.setLayoutY(180);
+        button4.setId("4");
 
         button5.setPrefSize(77,77);
         button5.setLayoutX(180);
         button5.setLayoutY(180);
+        button5.setId("5");
         //
         button6.setPrefSize(77,77);
         button6.setLayoutX(20);
         button6.setLayoutY(260);
+        button6.setId("6");
 
         button7.setPrefSize(77,77);
         button7.setLayoutX(100);
         button7.setLayoutY(260);
+        button7.setId("7");
 
         button8.setPrefSize(77,77);
         button8.setLayoutX(180);
         button8.setLayoutY(260);
-
-
-
+        button8.setId("8");
 
         newGame.setOnAction(this);
         button0.setOnAction(this);
@@ -108,8 +180,6 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button6.setOnAction(this);
         button7.setOnAction(this);
         button8.setOnAction(this);
-
-
 
         Pane layout = new Pane();
 
@@ -129,19 +199,102 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         primaryStage.show();
     }
 
-    //When button is clicked, handle() gets called
-    //Button click is an ActionEvent (also MouseEvents, TouchEvents, etc...)
     @Override
     public void handle(ActionEvent event) {
-        if (event.getSource() == newGame){
+        if (event.getSource() == newGame) {
             ButtonShuffle();
         }
 
-        if (event.getSource() == button0){
-//            System.out.println(button0.getText());
-
+        if (event.getSource() == button0) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button0.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button0);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button0.getText();
+                buttonId = button0.getId();
+            }
         }
 
-
+        if (event.getSource() == button1) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button1.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button1);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button1.getText();
+                buttonId = button1.getId();
+            }
+        }
+        if (event.getSource() == button2) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button2.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button2);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button2.getText();
+                buttonId = button2.getId();
+            }
+        }
+        if (event.getSource() == button3) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button3.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button3);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button3.getText();
+                buttonId = button3.getId();
+            }
+        }
+        if (event.getSource() == button4) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button4.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button4);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button4.getText();
+                buttonId = button4.getId();
+            }
+        }
+        if (event.getSource() == button5) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button5.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button5);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button5.getText();
+                buttonId = button5.getId();
+            }
+        }
+        if (event.getSource() == button6) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button6.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button6);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button6.getText();
+                buttonId = button6.getId();
+            }
+        }
+        if (event.getSource() == button7) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button7.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button7);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button7.getText();
+                buttonId = button7.getId();
+            }
+        }
+        if (event.getSource() == button8) {
+            if (buttonPressCount == 1) {
+                pressedButtonText1 = button8.getText();
+                Csere(pressedButtonText0, pressedButtonText1, buttonId, button8);
+            } else {
+                buttonPressCount++;
+                pressedButtonText0 = button8.getText();
+                buttonId = button8.getId();
+            }
+        }
     }
 }
