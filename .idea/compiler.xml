@@ -20,7 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Kirako" target="7" />
+      <module name="Kirako" target="8" />
       <module name="KirakoPOM" target="1.5" />
     </bytecodeTargetLevel>
   </component>

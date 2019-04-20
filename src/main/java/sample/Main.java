@@ -4,34 +4,42 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.control.Button;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
+    public final JFileChooser fc = new JFileChooser();
+    public Label stepCountLabel = new Label("Step counter: ");
     public List<Integer> list = new ArrayList<>();
     public int[] finish = new int[9];
 
     public int buttonPressCount = 0;
+    public int stepCount = 0;
     public String pressedButtonText0 = "9";
     public String pressedButtonText1 = "9";
 
     public String buttonId;
 
     public Button newGame = new Button("New Game!");
-    public Button button0 = new Button();
-    public Button button1 = new Button();
-    public Button button2 = new Button();
-    public Button button3 = new Button();
-    public Button button4 = new Button();
-    public Button button5 = new Button();
-    public Button button6 = new Button();
-    public Button button7 = new Button();
-    public Button button8 = new Button();
+    public Button button0 = new Button("Press\nNew Game");
+    public Button button1 = new Button("Press\nNew Game");
+    public Button button2 = new Button("Press\nNew Game");
+    public Button button3 = new Button("Press\nNew Game");
+    public Button button4 = new Button("Press\nNew Game");
+    public Button button5 = new Button("Press\nNew Game");
+    public Button button6 = new Button("Press\nNew Game");
+    public Button button7 = new Button("Press\nNew Game");
+    public Button button8 = new Button("Press\nNew Game");
 
     public void ButtonShuffle()
     {
@@ -44,10 +52,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         for(int i = 0; i<9; i++)
             finish[i] = list.get(i);
 
-        for(int i = 0; i<9; i++){
-           System.out.print(finish[i] + " ");}
-
-        System.out.print("\n");
+//        for(int i = 0; i<9; i++){
+//           System.out.print(finish[i] + " ");}
+//
+//        System.out.print("\n");
 
         button0.setText(String.valueOf(list.get(0)));
         button1.setText(String.valueOf(list.get(1)));
@@ -60,24 +68,19 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button8.setText(String.valueOf(list.get(8)));
     }
 
-    public void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button) //siker ellenorzese meg hianyzik, csak egymas mellett levo szamok cserejenek ellenorzese is hianyik
+    public void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button) //siker ellenorzese meg hianyzik
     {
-        System.out.println("\n"+pressedButtonText0);
-        System.out.println(pressedButtonText1);
-        System.out.println(buttonId + "\n");
-
         buttonPressCount = 0;
+        stepCountLabel.setText("Step counter: " + ++stepCount);
 
-        if(pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
+    if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 3)
+    {
+        if (pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
 
             String temp;
-            temp = String.valueOf( finish[Integer.valueOf(button.getId())]);
+            temp = String.valueOf(finish[Integer.valueOf(button.getId())]);
             finish[Integer.valueOf(button.getId())] = Integer.valueOf(pressedButtonText0);
             finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
-
-            for(int i = 0; i<9; i++){
-            System.out.print(finish[i] + " ");}
-
 
             button.setText(pressedButtonText0);
 
@@ -108,9 +111,56 @@ public class Main extends Application implements EventHandler<ActionEvent> {
             if (button8.getId() == buttonId)
                 button8.setText(pressedButtonText1);
         }
-        else
-            System.out.println("ervenytelen lepes");
-           //kis felugro ablak h ervenytelen lepes
+        else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Invalid step!");
+            alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
+
+            alert.showAndWait();;
+        }
+    }
+    else{
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Invalid step!");
+        alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
+
+        alert.showAndWait();
+    }
+    }
+
+    public int[] Mentes(int[] finish) //allapot mentese hianyzik
+    {
+        fc.setDialogTitle("Mentes");
+        fc.showSaveDialog(null);
+        fc.requestFocus(true);
+
+        String file = fc.getSelectedFile().getAbsolutePath();
+
+        return finish;
+    }
+
+    public int[] Betoltes(int[] finish ) //allapot betoltese hianyzik
+    {
+        fc.setDialogTitle("Betoltes");
+        fc.showOpenDialog(null);
+        fc.requestFocus(true);
+
+        String file = fc.getSelectedFile().getAbsolutePath();
+
+        return finish;
+
+    }
+
+    public void Sugo()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeight(300);
+        alert.setContentText("Use the '0' tile to move. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.\n" +
+                "You can only move one tile at a time. Cannot move diagonally.\n" +
+                "Click on a tile You wanna move then click on a tile where You wanna move it.");
+
+        alert.showAndWait();
     }
 
     public static void main(String[] args) {
@@ -120,10 +170,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("8 Kirako");
+        primaryStage.setResizable(false);
 
-        newGame.setPrefSize(100,30);
-        newGame.setLayoutX(90);
-        newGame.setLayoutY(40);
+        stepCountLabel.setLayoutX(25);
+        stepCountLabel.setLayoutY(75);
+
+        newGame.setPrefSize(80,20);
+        newGame.setLayoutX(190);
+        newGame.setLayoutY(5);
 
         button0.setPrefSize(77,77);
         button0.setLayoutX(20);
@@ -181,9 +235,33 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button7.setOnAction(this);
         button8.setOnAction(this);
 
-        Pane layout = new Pane();
+        Menu fileMenu = new Menu("_Game");
+        Menu sugoMenu = new Menu("_Sugo");
+        MenuBar menuBar = new MenuBar();
 
-        layout.getChildren().addAll(newGame);
+        MenuItem mentes = new MenuItem("_Mentes...");
+        mentes.setId("m");
+        MenuItem betoltes = new MenuItem("_Betoltes...");
+        betoltes.setId("b");
+        MenuItem sugo = new MenuItem("Sugo");
+        sugo.setId("s");
+
+        fileMenu.getItems().add(mentes);
+        fileMenu.getItems().add(new SeparatorMenuItem());
+        fileMenu.getItems().add(betoltes);
+
+        sugoMenu.getItems().add(sugo);
+
+        mentes.setOnAction(e -> Mentes(finish));
+        betoltes.setOnAction(e -> Betoltes(finish));
+        sugo.setOnAction(e -> Sugo());
+
+        menuBar.getMenus().addAll(fileMenu,sugoMenu);
+
+        Pane layout = new Pane();
+        layout.getChildren().add(stepCountLabel);
+        layout.getChildren().add(menuBar);
+        layout.getChildren().add(newGame);
         layout.getChildren().add(button0);
         layout.getChildren().add(button1);
         layout.getChildren().add(button2);
