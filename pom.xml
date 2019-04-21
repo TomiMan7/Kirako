@@ -19,6 +19,27 @@
             </plugin>
         </plugins>
     </build>
+    <dependencies>
+    <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.8.5</version>
+        <scope>compile</scope>
+    </dependency>
+    </dependencies>
+    <developers>
+        <developer>
+            <name>Löki Tamás</name>
+            <email>4tamas.loki@gmail.com</email>
+        </developer>
+    </developers>
 
+    <description>
+        This program was to immitate the 8 puzzles game. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.
+    </description>
+
+    <scm>
+        <url>https://github.com/TomiMan7/Kirako</url>
+    </scm>
 
 </project>

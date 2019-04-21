@@ -12,164 +12,69 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.swing.*;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
-    public final JFileChooser fc = new JFileChooser();
-    public Label stepCountLabel = new Label("Step counter: ");
-    public List<Integer> list = new ArrayList<>();
-    public int[] finish = new int[9];
+    public static final JFileChooser fc = new JFileChooser();
+    public static Label stepCountLabel = new Label("Step counter: ");
+    public static List<Integer> list = new ArrayList<>();
+    public static int[] finish = new int[9];
+    public int[] nonStaticfinish = new int[9];
 
-    public int buttonPressCount = 0;
-    public int stepCount = 0;
-    public String pressedButtonText0 = "9";
-    public String pressedButtonText1 = "9";
+    public static int buttonPressCount = 0;
+    public static int stepCount = 0;
+    public int nonStaticstepCount = 0;
+    public static String pressedButtonText0 = "9";
+    public static String pressedButtonText1 = "9";
 
-    public String buttonId;
+    public static String buttonId;
 
-    public Button newGame = new Button("New Game!");
-    public Button button0 = new Button("Press\nNew Game");
-    public Button button1 = new Button("Press\nNew Game");
-    public Button button2 = new Button("Press\nNew Game");
-    public Button button3 = new Button("Press\nNew Game");
-    public Button button4 = new Button("Press\nNew Game");
-    public Button button5 = new Button("Press\nNew Game");
-    public Button button6 = new Button("Press\nNew Game");
-    public Button button7 = new Button("Press\nNew Game");
-    public Button button8 = new Button("Press\nNew Game");
+    public static Button newGame = new Button("New Game!");
+    public static Button button0 = new Button("Press\nNew Game");
+    public static Button button1 = new Button("Press\nNew Game");
+    public static Button button2 = new Button("Press\nNew Game");
+    public static Button button3 = new Button("Press\nNew Game");
+    public static Button button4 = new Button("Press\nNew Game");
+    public static Button button5 = new Button("Press\nNew Game");
+    public static Button button6 = new Button("Press\nNew Game");
+    public static Button button7 = new Button("Press\nNew Game");
+    public static Button button8 = new Button("Press\nNew Game");
 
-    public void ButtonShuffle()
-    {
-        list.clear();
-        for(int i = 0; i< 9; i++)
-            list.add(i);
+    public Main()
+    {}
 
-        Collections.shuffle(list);
-
-        for(int i = 0; i<9; i++)
-            finish[i] = list.get(i);
-
-//        for(int i = 0; i<9; i++){
-//           System.out.print(finish[i] + " ");}
-//
-//        System.out.print("\n");
-
-        button0.setText(String.valueOf(list.get(0)));
-        button1.setText(String.valueOf(list.get(1)));
-        button2.setText(String.valueOf(list.get(2)));
-        button3.setText(String.valueOf(list.get(3)));
-        button4.setText(String.valueOf(list.get(4)));
-        button5.setText(String.valueOf(list.get(5)));
-        button6.setText(String.valueOf(list.get(6)));
-        button7.setText(String.valueOf(list.get(7)));
-        button8.setText(String.valueOf(list.get(8)));
+    public int[] getNonStaticfinish() {
+        return nonStaticfinish;
     }
 
-    public void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button) //siker ellenorzese meg hianyzik
-    {
-        buttonPressCount = 0;
-        stepCountLabel.setText("Step counter: " + ++stepCount);
-
-    if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 3)
-    {
-        if (pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
-
-            String temp;
-            temp = String.valueOf(finish[Integer.valueOf(button.getId())]);
-            finish[Integer.valueOf(button.getId())] = Integer.valueOf(pressedButtonText0);
-            finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
-
-            button.setText(pressedButtonText0);
-
-            if (button0.getId() == buttonId)
-                button0.setText(pressedButtonText1);
-
-            if (button1.getId() == buttonId)
-                button1.setText(pressedButtonText1);
-
-            if (button2.getId() == buttonId)
-                button2.setText(pressedButtonText1);
-
-            if (button3.getId() == buttonId)
-                button3.setText(pressedButtonText1);
-
-            if (button4.getId() == buttonId)
-                button4.setText(pressedButtonText1);
-
-            if (button5.getId() == buttonId)
-                button5.setText(pressedButtonText1);
-
-            if (button6.getId() == buttonId)
-                button6.setText(pressedButtonText1);
-
-            if (button7.getId() == buttonId)
-                button7.setText(pressedButtonText1);
-
-            if (button8.getId() == buttonId)
-                button8.setText(pressedButtonText1);
-        }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Invalid step!");
-            alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
-
-            alert.showAndWait();;
-        }
-    }
-    else{
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Invalid step!");
-        alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
-
-        alert.showAndWait();
-    }
+    public void setNonStaticfinish(int[] nonStaticfinish) {
+        this.nonStaticfinish = nonStaticfinish;
     }
 
-    public int[] Mentes(int[] finish) //allapot mentese hianyzik
-    {
-        fc.setDialogTitle("Mentes");
-        fc.showSaveDialog(null);
-        fc.requestFocus(true);
-
-        String file = fc.getSelectedFile().getAbsolutePath();
-
-        return finish;
+    @Override
+    public String toString() {
+        return "Main{" +
+                "nonStaticfinish=" + Arrays.toString(nonStaticfinish) +
+                '}';
     }
 
-    public int[] Betoltes(int[] finish ) //allapot betoltese hianyzik
-    {
-        fc.setDialogTitle("Betoltes");
-        fc.showOpenDialog(null);
-        fc.requestFocus(true);
-
-        String file = fc.getSelectedFile().getAbsolutePath();
-
-        return finish;
-
+    public int getNonStaticstepCount() {
+        return nonStaticstepCount;
     }
 
-    public void Sugo()
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeight(300);
-        alert.setContentText("Use the '0' tile to move. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.\n" +
-                "You can only move one tile at a time. Cannot move diagonally.\n" +
-                "Click on a tile You wanna move then click on a tile where You wanna move it.");
-
-        alert.showAndWait();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
+    public void setNonStaticstepCount(int nonStaticstepCount) {
+        this.nonStaticstepCount = nonStaticstepCount;
     }
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("8 Kirako");
+        Main a = new Main();
+        primaryStage.setTitle("8 Puzzle");
         primaryStage.setResizable(false);
 
         stepCountLabel.setLayoutX(25);
@@ -236,14 +141,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button8.setOnAction(this);
 
         Menu fileMenu = new Menu("_Game");
-        Menu sugoMenu = new Menu("_Sugo");
+        Menu sugoMenu = new Menu("Info");
         MenuBar menuBar = new MenuBar();
 
-        MenuItem mentes = new MenuItem("_Mentes...");
+        MenuItem mentes = new MenuItem("Save...");
         mentes.setId("m");
-        MenuItem betoltes = new MenuItem("_Betoltes...");
+        MenuItem betoltes = new MenuItem("Load...");
         betoltes.setId("b");
-        MenuItem sugo = new MenuItem("Sugo");
+        MenuItem sugo = new MenuItem("Info");
         sugo.setId("s");
 
         fileMenu.getItems().add(mentes);
@@ -252,9 +157,26 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
         sugoMenu.getItems().add(sugo);
 
-        mentes.setOnAction(e -> Mentes(finish));
-        betoltes.setOnAction(e -> Betoltes(finish));
-        sugo.setOnAction(e -> Sugo());
+        mentes.setOnAction(e -> {
+            try
+            {
+                Controller.Mentes(finish, stepCount);
+            }
+            catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        });
+        betoltes.setOnAction(e -> {
+            try
+            {
+                Controller.Betoltes(finish);
+            }
+            catch (FileNotFoundException ex)
+            {
+                ex.printStackTrace();
+            }
+        });
+        sugo.setOnAction(e -> Controller.Sugo());
 
         menuBar.getMenus().addAll(fileMenu,sugoMenu);
 
@@ -280,13 +202,13 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent event) {
         if (event.getSource() == newGame) {
-            ButtonShuffle();
+            Controller.ButtonShuffle();
         }
 
         if (event.getSource() == button0) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button0.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button0);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button0);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button0.getText();
@@ -297,7 +219,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button1) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button1.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button1);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button1);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button1.getText();
@@ -307,7 +229,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button2) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button2.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button2);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button2);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button2.getText();
@@ -317,7 +239,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button3) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button3.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button3);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button3);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button3.getText();
@@ -327,7 +249,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button4) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button4.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button4);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button4);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button4.getText();
@@ -337,7 +259,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button5) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button5.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button5);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button5);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button5.getText();
@@ -347,7 +269,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button6) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button6.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button6);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button6);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button6.getText();
@@ -357,7 +279,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button7) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button7.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button7);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button7);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button7.getText();
@@ -367,7 +289,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button8) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button8.getText();
-                Csere(pressedButtonText0, pressedButtonText1, buttonId, button8);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button8);
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button8.getText();
@@ -376,3 +298,39 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
     }
 }
+
+/*<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>hu.unideb.inf</groupId>
+	<artifactId>gson-example</artifactId>
+	<version>1.0</version>
+	<properties>
+		<maven.compiler.source>9</maven.compiler.source>
+		<maven.compiler.target>9</maven.compiler.target>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>2.8.5</version>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.8.1</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.github.johnpoth</groupId>
+				<artifactId>jshell-maven-plugin</artifactId>
+				<version>1.1</version>
+			</plugin>
+		</plugins>
+	</build>
+</project>
+*/
