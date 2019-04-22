@@ -9,7 +9,9 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class Controller extends Main{
 
@@ -18,7 +20,7 @@ public class Controller extends Main{
 
     public static void ButtonShuffle()
     {
-        list.clear();
+        List<Integer> list = new ArrayList<>();
         for(int i = 0; i< 9; i++)
             list.add(i);
 
@@ -27,7 +29,9 @@ public class Controller extends Main{
         for(int i = 0; i<9; i++)
             finish[i] = list.get(i);
 
+        stepCount = 0;
 
+        stepCountLabel.setText("Step counter: ");
         button0.setText(String.valueOf(list.get(0)));
         button1.setText(String.valueOf(list.get(1)));
         button2.setText(String.valueOf(list.get(2)));
@@ -162,7 +166,7 @@ public class Controller extends Main{
         return finish;
     }
 
-    public static int[] Betoltes(int[] finish ) throws FileNotFoundException //not yet finished
+    public static int[] Betoltes() throws FileNotFoundException
     {
         Main main = new Main();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -176,6 +180,18 @@ public class Controller extends Main{
         main = gson.fromJson(new FileReader(file), Main.class);
 
         finish = main.getNonStaticfinish();
+
+        stepCountLabel.setText("Step counter: " + main.getNonStaticstepCount());
+
+        button0.setText(String.valueOf(finish[0]));
+        button1.setText(String.valueOf(finish[1]));
+        button2.setText(String.valueOf(finish[2]));
+        button3.setText(String.valueOf(finish[3]));
+        button4.setText(String.valueOf(finish[4]));
+        button5.setText(String.valueOf(finish[5]));
+        button6.setText(String.valueOf(finish[6]));
+        button7.setText(String.valueOf(finish[7]));
+        button8.setText(String.valueOf(finish[8]));
 
         return finish;
     }

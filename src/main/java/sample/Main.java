@@ -14,15 +14,12 @@ import javafx.stage.Stage;
 import javax.swing.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main extends Application implements EventHandler<ActionEvent> {
 
     public static final JFileChooser fc = new JFileChooser();
     public static Label stepCountLabel = new Label("Step counter: ");
-    public static List<Integer> list = new ArrayList<>();
     public static int[] finish = new int[9];
     public int[] nonStaticfinish = new int[9];
 
@@ -88,11 +85,15 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button0.setLayoutX(20);
         button0.setLayoutY(100);
         button0.setId("0");
+//        button0.setStyle("-fx-background-color: red; -fx-font-size: 15;");
+//        button0.setWrapText(true);
 
         button1.setPrefSize(77,77);
         button1.setLayoutX(100);
         button1.setLayoutY(100);
         button1.setId("1");
+//        button1.setStyle("-fx-background-color: white; -fx-font-size: 15;");
+//        button1.setWrapText(true);
 
         button2.setPrefSize(77,77);
         button2.setLayoutX(180);
@@ -169,7 +170,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         betoltes.setOnAction(e -> {
             try
             {
-                Controller.Betoltes(finish);
+                Controller.Betoltes();
             }
             catch (FileNotFoundException ex)
             {
