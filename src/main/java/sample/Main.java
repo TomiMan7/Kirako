@@ -22,6 +22,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     public static Label stepCountLabel = new Label("Step counter: ");
     public static int[] finish = new int[9];
     public int[] nonStaticfinish = new int[9];
+    public long nonStaticgameTime = 0;
+    public static long gameTime = 0;
 
     public static int buttonPressCount = 0;
     public static int stepCount = 0;
@@ -44,6 +46,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 
     public Main()
     {}
+
+    public long getNonStaticgameTime() {
+        return nonStaticgameTime;
+    }
+
+    public void setNonStaticgameTime(long nonStaticgameTime) {
+        this.nonStaticgameTime = nonStaticgameTime;
+    }
 
     public int[] getNonStaticfinish() {
         return nonStaticfinish;
@@ -161,7 +171,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         mentes.setOnAction(e -> {
             try
             {
-                Controller.Mentes(finish, stepCount);
+                Controller.Mentes(finish, stepCount, gameTime);
             }
             catch (IOException ex) {
                 ex.printStackTrace();

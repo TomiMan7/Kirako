@@ -13,13 +13,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Controller class provides methods for Main.java to handle the events in {@code primaryStage}
+ */
 public class Controller extends Main{
 
-    public Controller() {
-    }
 
+    /**
+     * ButtonShuffle takes care of the randomization of the numbers on the buttons.
+     * Also keeps track of time played in {@code gameTime}.
+     * Resets {@code stepCount} in case a player starts a new game.
+     * Sets the value of {@code setCountLabel}.
+     * Sets the values of {@code button0} to {@code button8}
+     */
     public static void ButtonShuffle()
     {
+        gameTime = System.nanoTime();
         List<Integer> list = new ArrayList<>();
         for(int i = 0; i< 9; i++)
             list.add(i);
@@ -43,6 +52,16 @@ public class Controller extends Main{
         button8.setText(String.valueOf(list.get(8)));
     }
 
+    /**
+     *Function Csere takes care of the switch of the numbers on clicked buttons, and calls fucntion win() to check if a win condition is present. Also warns if an invalid step has been made.
+     *Resets {@code buttonPressCount}.
+     *Sets {@code stepCountLabel} to the correct value.
+     *
+     * @param pressedButtonText0 is the value on the first pressed button
+     * @param pressedButtonText1 is the value on the second pressed button
+     * @param buttonId is the first pressed button ID.
+     * @param button is the second button itself.
+     */
     public static void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button)
     {
         buttonPressCount = 0;
@@ -105,18 +124,21 @@ public class Controller extends Main{
         }
     }
 
+    /**
+     * Checks if a win condition is presented on the buttons. If so it sets the values on {@code button0} to {@code button8} to the correct value. Shows the end game(not that end game) screen with some statistics
+     */
     public static void Win()
     {
         int win = 0;
 
-        for(int i = 0; i < finish.length - 1; i++)
+        for(int i = 0; i < finish.length - 1/*2*/; i++) //adjust this for lowering the win threshold
             if(finish[i] == i+1)
                 win++;
 
-        if(win == finish.length - 1)
+        if(win == finish.length - 1/*2*/) //adjust this for lowering the win threshold
         {        Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("You won!");
-            alert.setContentText("You won! Steps needed: " + stepCount);
+            alert.setContentText("You won! Steps needed: " + stepCount + " Avarage sec. between steps: " + GameStat());
             button0.setText("You won!");
             button1.setText("You won!");
             button2.setText("You won!");
@@ -127,9 +149,13 @@ public class Controller extends Main{
             button7.setText("You won!");
             button8.setText("You won!");
 
-            alert.showAndWait();}
+            alert.showAndWait();
+        }
     }
 
+    /**
+     * Handles the events when the Info button is pressed. Shows a popup window with informations regarding the game.
+     */
     public static void Sugo()
     {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -142,12 +168,24 @@ public class Controller extends Main{
         alert.showAndWait();
     }
 
-    public static int[] Mentes(int[] finish, int stepCount) throws IOException
+    /**
+     * Handles saving of the current state of the game.
+     * Calculates the time passed since the start of the game into the variable {@code currgametime}.
+     * After getting the correct values for {@code finish} {@code stepCount} and {@code currgametime} writes these datas to a json file.
+     *
+     * @param finish is the matrix representation of the values found on the buttons.
+     * @param stepCount is the value of {@code stepCountLabel} showing how many steps have been made.
+     * @param gameTime is the time passed since the start of the game.
+     * @throws IOException throws exceptions.
+     */
+    public static void Mentes(int[] finish, int stepCount, long gameTime) throws IOException
     {
+        long currgametime = System.nanoTime();
         Main main = new Main();
 
         main.setNonStaticfinish(finish);
         main.setNonStaticstepCount(stepCount);
+        main.setNonStaticgameTime(currgametime - gameTime);
 
         fc.setDialogTitle("Save");
         fc.showSaveDialog(null);
@@ -162,11 +200,15 @@ public class Controller extends Main{
         gson.toJson(main,writer);
 
         writer.close();
-
-        return finish;
+        System.out.println(GameStat());
     }
 
-    public static int[] Betoltes() throws FileNotFoundException
+    /**
+     * Handles loading the game from a saved state using a correctly saved json file.
+     * Sets the values of {@code finish} {@code gameTime} {@code stepCountLabel} {@code stepCount} and {@code button0} to {@code button8} to the correct value.
+     * @throws FileNotFoundException throws exceptions.
+     */
+    public static void Betoltes() throws FileNotFoundException
     {
         Main main = new Main();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -180,8 +222,10 @@ public class Controller extends Main{
         main = gson.fromJson(new FileReader(file), Main.class);
 
         finish = main.getNonStaticfinish();
+        gameTime = main.getNonStaticgameTime();
 
         stepCountLabel.setText("Step counter: " + main.getNonStaticstepCount());
+        stepCount = main.getNonStaticstepCount();
 
         button0.setText(String.valueOf(finish[0]));
         button1.setText(String.valueOf(finish[1]));
@@ -192,7 +236,15 @@ public class Controller extends Main{
         button6.setText(String.valueOf(finish[6]));
         button7.setText(String.valueOf(finish[7]));
         button8.setText(String.valueOf(finish[8]));
+    }
 
-        return finish;
+    /**
+     * Handles the creation of {@code gamestat} for the end game (still not that end game) screen.
+     * @return {@code gamestat} the value of {@code gameTime} / {@code stepCount}, showing the average time between steps.
+     */
+    public static double GameStat()
+    {
+        long gamestat;
+        return gamestat = gameTime /1000000000 / 1000 /stepCount; //ms to s
     }
 }
