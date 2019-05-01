@@ -5,10 +5,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javax.swing.*;
@@ -63,7 +59,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         this.nonStaticfinish = nonStaticfinish;
     }
 
-    @Override
+  //  @Override
     public String toString() {
         return "Main{" +
                 "nonStaticfinish=" + Arrays.toString(nonStaticfinish) +
@@ -78,7 +74,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         this.nonStaticstepCount = nonStaticstepCount;
     }
 
-    @Override
+    //@Override
     public void start(Stage primaryStage) {
         Main a = new Main();
         primaryStage.setTitle("8 Puzzle");
@@ -210,7 +206,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         primaryStage.show();
     }
 
-    @Override
+    //@Override
     public void handle(ActionEvent event) {
         if (event.getSource() == newGame) {
             Controller.ButtonShuffle();
@@ -309,8 +305,44 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         }
     }
 }
+/*
+* JavaFx dependency :
+* https://blog.cag.se/?p=752
+*
+* */
 
-/*<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+/*
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>8.8.3</version>
+                <configuration>
+                    <mainClass>sample.Main</mainClass>
+                </configuration>
+            </plugin>
+
+
+
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>javaFX</artifactId>
+            <version>2.2</version>
+            <scope>system</scope>
+            <systemPath>C:\Program Files\Java\jre7\lib\jfxrt.jar</systemPath>
+        </dependency>
+
+To create your executable file with JavaFX-magic, call mvn jfx:jar. The jar-file will be placed at target/jfx/app.
+
+                 <dependency>
+                    <groupId>javafx-packager</groupId>
+                    <artifactId>javafx-packager</artifactId>
+                    <version>9</version>
+                    <scope>system</scope>
+                    <systemPath>${java.home}/lib/ant-javafx.jar</systemPath>
+                </dependency>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>hu.unideb.inf</groupId>
