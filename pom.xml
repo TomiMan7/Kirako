@@ -53,6 +53,20 @@
             <scope>system</scope>
             <systemPath>D:/Programok/IntelliJ IDEA Community Edition 2019.1.1/jre64/lib/ext/jfxrt.jar</systemPath>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openclover/clover-maven-plugin -->
+        <dependency>
+            <groupId>org.openclover</groupId>
+            <artifactId>clover-maven-plugin</artifactId>
+            <version>4.3.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
+        <dependency>
+            <groupId>org.jacoco</groupId>
+            <artifactId>jacoco-maven-plugin</artifactId>
+            <version>0.8.3</version>
+        </dependency>-->
+
 
     </dependencies>
 
@@ -62,6 +76,12 @@
             <email>4tamas.loki@gmail.com</email>
         </developer>
     </developers>
+<contributors>
+    <contributor>
+        <name>Löki Tamás</name>
+        <email>4tamas.loki@gmail.com</email>
+    </contributor>
+</contributors>
 
     <description>
         This program was to imitate the 8 puzzles game. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.
@@ -76,8 +96,26 @@
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jxr-plugin</artifactId>
+                <version>3.0.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-project-info-reports-plugin</artifactId>
                 <version>3.0.0</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>3.0.0</version>
+                <!----><configuration>
+                     <configLocation>checkstyle.xml</configLocation>
+                </configuration>
+            </plugin><!---->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>3.0.0-M3</version>
             </plugin>
 
 

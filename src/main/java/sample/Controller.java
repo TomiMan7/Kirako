@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Controller class provides methods for Main.java to handle the events in {@code primaryStage}
+ * Controller class provides methods for Main.java to handle the events in {@code primaryStage}.
  */
 public class Controller extends Main{
 
@@ -175,12 +175,12 @@ public class Controller extends Main{
      * @param finish is the matrix representation of the values found on the buttons.
      * @param stepCount is the value of {@code stepCountLabel} showing how many steps have been made.
      * @param gameTime is the time passed since the start of the game.
+     * @param main is an instance of Main used to save the games state.
      * @throws IOException throws exceptions.
      */
-    public static void Mentes(int[] finish, int stepCount, long gameTime) throws IOException
+    public static void Mentes(int[] finish, int stepCount, long gameTime, Main main) throws IOException
     {
         long currgametime = System.nanoTime();
-        Main main = new Main();
 
         main.setNonStaticfinish(finish);
         main.setNonStaticstepCount(stepCount);
@@ -199,17 +199,16 @@ public class Controller extends Main{
         gson.toJson(main,writer);
 
         writer.close();
-        System.out.println(GameStat());
     }
 
     /**
      * Handles loading the game from a saved state using a correctly saved json file.
      * Sets the values of {@code finish} {@code gameTime} {@code stepCountLabel} {@code stepCount} and {@code button0} to {@code button8} to the correct value.
+     * @param main is an instance of Main used to save the games state.
      * @throws FileNotFoundException throws exceptions.
      */
-    public static void Betoltes() throws FileNotFoundException
+    public static void Betoltes(Main main) throws FileNotFoundException
     {
-        Main main = new Main();
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
         fc.setDialogTitle("Load");
