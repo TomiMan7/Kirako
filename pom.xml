@@ -45,20 +45,33 @@
         <scope>compile</scope>
     </dependency>
 
-
-        <dependency>
+        <!--<dependency>
             <groupId>javafx</groupId>
             <artifactId>javafx</artifactId>
             <version>2.2</version>
             <scope>system</scope>
             <systemPath>D:/Programok/IntelliJ IDEA Community Edition 2019.1.1/jre64/lib/ext/jfxrt.jar</systemPath>
+        </dependency>-->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>11.0.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>11.0.2</version>
+        </dependency>
+
+
         <!-- https://mvnrepository.com/artifact/org.openclover/clover-maven-plugin -->
         <dependency>
             <groupId>org.openclover</groupId>
             <artifactId>clover-maven-plugin</artifactId>
             <version>4.3.1</version>
         </dependency>
+
+
 
         <!-- https://mvnrepository.com/artifact/org.jacoco/jacoco-maven-plugin
         <dependency>

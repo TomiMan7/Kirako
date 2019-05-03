@@ -375,3 +375,5 @@ public class Main extends Application implements EventHandler<ActionEvent> {
 * JavaFx dependency for Maven and for IntelliJ:
 * https://blog.cag.se/?p=752
 * */
+
+//mvn exec:java ezzel futtatni package utan; ehhez kell egy plugin
