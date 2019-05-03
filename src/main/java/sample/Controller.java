@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import org.jetbrains.annotations.TestOnly;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
@@ -137,7 +139,7 @@ public class Controller extends Main{
         if(win == finish.length - 1/*2*/) //adjust this for lowering the win threshold
         {        Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("You won!");
-            alert.setContentText("You won! Steps needed: " + stepCount + " Avarage sec. between steps: " + GameStat());
+            alert.setContentText("You won! Steps needed: " + stepCount + " Avarage sec. between steps: " + GameStat(gameTime,stepCount));
             button0.setText("You won!");
             button1.setText("You won!");
             button2.setText("You won!");
@@ -239,10 +241,12 @@ public class Controller extends Main{
     /**
      * Handles the creation of {@code gamestat} for the end game (still not that end game) screen.
      * @return {@code gamestat} the value of {@code gameTime} / {@code stepCount}, showing the average time between steps.
+     * @param gameTime time passed in ns.
+     * @param stepCount steps made.
      */
-    public static double GameStat()
+    public static double GameStat(long gameTime, int stepCount)
     {
-        long gamestat;
-        return gamestat = gameTime /1000000000 / 1000 /stepCount; //ms to s
+        double gamestat;
+        return gamestat = gameTime /(double)1_000_000_000 /(double)stepCount; //ms to s
     }
 }
