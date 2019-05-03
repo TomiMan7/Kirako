@@ -2,14 +2,15 @@ package sample;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import org.jetbrains.annotations.TestOnly;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -132,14 +133,17 @@ public class Controller extends Main{
     {
         int win = 0;
 
-        for(int i = 0; i < finish.length - 1/*2*/; i++) //adjust this for lowering the win threshold
+        for(int i = 0; i < /*finish.length - 1*/2; i++) //adjust this for lowering the win threshold
             if(finish[i] == i+1)
                 win++;
 
-        if(win == finish.length - 1/*2*/) //adjust this for lowering the win threshold
+        if(win == /*finish.length - 1*/2) //adjust this for lowering the win threshold
         {        Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("You won!");
-            alert.setContentText("You won! Steps needed: " + stepCount + " Avarage sec. between steps: " + GameStat(gameTime,stepCount));
+            alert.setHeight(150);
+            alert.setContentText("You won! Steps needed: " + stepCount + "\nAvarage sec. between steps: " + GameStat(gameTime,stepCount));
+//            System.out.println(gameTime);
+//            System.out.println(GameStat(gameTime,stepCount));
             button0.setText("You won!");
             button1.setText("You won!");
             button2.setText("You won!");
@@ -246,7 +250,6 @@ public class Controller extends Main{
      */
     public static double GameStat(long gameTime, int stepCount)
     {
-        double gamestat;
-        return gamestat = gameTime /(double)1_000_000_000 /(double)stepCount; //ms to s
+        return gameTime /1_000_000_000.0 / 1000.0 /(double)stepCount; //ms to s
     }
 }

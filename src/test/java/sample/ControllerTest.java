@@ -5,18 +5,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class ControllerTest {
+public class ControllerTest {
 
     @Test
     void gameStat() { //todo finish test polishing
-
-        Controller c = new Controller();
-
-        long time = 1_000_000_000;
-        int step = 2;
-
-        double result = (long) c.GameStat(time, step);
-
-        Assert.assertEquals( 0.5,result);
+        Assert.assertEquals( 1.6306362170138238,Controller.GameStat((long)27720815689235.0, 17));
     }
 }

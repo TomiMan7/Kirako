@@ -34,7 +34,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     /**Used to save the game time into json.*/
     long nonStaticgameTime = 0;
     /**Stores the time the game was started.*/
-    static long gameTime = 0;
+    static long gameTime =0;
 
     /**Keeps track how many button presses were made between steps.*/
     static int buttonPressCount = 0;
