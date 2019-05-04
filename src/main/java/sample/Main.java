@@ -8,7 +8,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import javax.swing.*;
+import javax.swing.JFileChooser;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -48,7 +48,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     static String pressedButtonText1 = "9";
 
     /**Stores the first pressed buttons ID.*/
-    static String buttonId;
+    static String buttonId = "0";
     /**Button for starting a new game.*/
     static Button newGame = new Button("New Game!");
     /**Button for representing a number.*/

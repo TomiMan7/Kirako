@@ -20,6 +20,8 @@ import java.util.List;
  */
 public class Controller extends Main{
 
+    public Controller()
+    {}
 
     /**
      * ButtonShuffle takes care of the randomization of the numbers on the buttons.
@@ -250,6 +252,9 @@ public class Controller extends Main{
      */
     public static double GameStat(long gameTime, int stepCount)
     {
-        return gameTime /1_000_000_000.0 / 1000.0 /(double)stepCount; //ms to s
+        return Math.floor((gameTime /1_000_000_000.0 / 1000.0 /(double)stepCount) * 100) /100; //ms to s
     }
+
+    /*Just for testing purposes*/
+//    public static double asd(int a, int b){return a+b;}
 }
