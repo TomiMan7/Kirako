@@ -20,6 +20,9 @@ import java.util.List;
  */
 public class Controller extends Main{
 
+    /**
+     * Constructor for Controller
+     */
     public Controller()
     {}
 
@@ -32,7 +35,7 @@ public class Controller extends Main{
      */
     public static void ButtonShuffle()
     {
-        gameTime = System.nanoTime();
+        Model.gameTime = System.nanoTime();
         List<Integer> list = new ArrayList<>();
         for(int i = 0; i< 9; i++)
             list.add(i);
@@ -42,7 +45,7 @@ public class Controller extends Main{
         for(int i = 0; i<9; i++)
             finish[i] = list.get(i);
 
-        stepCount = 0;
+        Model.stepCount = 0;
 
         stepCountLabel.setText("Step counter: ");
         button0.setText(String.valueOf(list.get(0)));
@@ -54,6 +57,90 @@ public class Controller extends Main{
         button6.setText(String.valueOf(list.get(6)));
         button7.setText(String.valueOf(list.get(7)));
         button8.setText(String.valueOf(list.get(8)));
+    }
+
+    /**
+     * Handles the events when the Info button is pressed. Shows a popup window with informations regarding the game.
+     */
+    public static void Sugo()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information");
+        alert.setHeight(300);
+        alert.setContentText("Use the '0' tile to move. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.\n" +
+                "You can only move one tile at a time. Cannot move diagonally.\n" +
+                "Click on a tile You wanna move then click on a tile where You wanna move it.");
+
+        alert.showAndWait();
+    }
+
+    /**
+     * Handles saving of the current state of the game.
+     * Calculates the time passed since the start of the game into the variable {@code currgametime}.
+     * After getting the correct values for {@code finish} {@code stepCount} and {@code currgametime} writes these datas to a json file.
+     *
+     * @param finish is the matrix representation of the values found on the buttons.
+     * @param stepCount is the value of {@code stepCountLabel} showing how many steps have been made.
+     * @param gameTime is the time passed since the start of the game.
+     * @param main is an instance of Main used to save the games state.
+     * @throws IOException throws exceptions.
+     */
+    public static void Mentes(int[] finish, int stepCount, long gameTime, Main main) throws IOException
+    {
+        long currgametime = System.nanoTime();
+
+        main.setNonStaticfinish(finish);
+        main.setNonStaticstepCount(stepCount);
+        main.setNonStaticgameTime(currgametime - gameTime);
+
+        fc.setDialogTitle("Save");
+        fc.showSaveDialog(null);
+        fc.requestFocus(true);
+
+        String file = fc.getSelectedFile().getAbsolutePath();
+
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        FileWriter writer = new FileWriter(file+".json");
+
+        gson.toJson(main,writer);
+
+        writer.close();
+    }
+
+    /**
+     * Handles loading the game from a saved state using a correctly saved json file.
+     * Sets the values of {@code finish} {@code gameTime} {@code stepCountLabel} {@code stepCount} and {@code button0} to {@code button8} to the correct value.
+     * @param main is an instance of Main used to save the games state.
+     * @throws FileNotFoundException throws exceptions.
+     */
+    public static void Betoltes(Main main) throws FileNotFoundException
+    {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        fc.setDialogTitle("Load");
+        fc.showOpenDialog(null);
+        fc.requestFocus(true);
+
+        String file = fc.getSelectedFile().getAbsolutePath();
+
+        main = gson.fromJson(new FileReader(file), Main.class);
+
+        finish = main.getNonStaticfinish();
+        Model.gameTime = main.getNonStaticgameTime();
+
+        stepCountLabel.setText("Step counter: " + main.getNonStaticstepCount());
+        Model.stepCount = main.getNonStaticstepCount();
+
+        button0.setText(String.valueOf(finish[0]));
+        button1.setText(String.valueOf(finish[1]));
+        button2.setText(String.valueOf(finish[2]));
+        button3.setText(String.valueOf(finish[3]));
+        button4.setText(String.valueOf(finish[4]));
+        button5.setText(String.valueOf(finish[5]));
+        button6.setText(String.valueOf(finish[6]));
+        button7.setText(String.valueOf(finish[7]));
+        button8.setText(String.valueOf(finish[8]));
     }
 
     /**
@@ -69,7 +156,7 @@ public class Controller extends Main{
     public static void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button)
     {
         buttonPressCount = 0;
-        stepCountLabel.setText("Step counter: " + ++stepCount);
+        stepCountLabel.setText("Step counter: " + ++Model.stepCount);
 
         if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 3)
         {
@@ -143,7 +230,7 @@ public class Controller extends Main{
         {        Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("You won!");
             alert.setHeight(150);
-            alert.setContentText("You won! Steps needed: " + stepCount + "\nAvarage sec. between steps: " + GameStat(gameTime,stepCount));
+            alert.setContentText("You won! Steps needed: " + Model.stepCount + "\nAvarage sec. between steps: " + Model.GameStat(Model.gameTime,Model.stepCount));
 //            System.out.println(gameTime);
 //            System.out.println(GameStat(gameTime,stepCount));
             button0.setText("You won!");
@@ -159,102 +246,6 @@ public class Controller extends Main{
             alert.showAndWait();
         }
     }
-
-    /**
-     * Handles the events when the Info button is pressed. Shows a popup window with informations regarding the game.
-     */
-    public static void Sugo()
-    {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Information");
-        alert.setHeight(300);
-        alert.setContentText("Use the '0' tile to move. Your goal is to move the numbers into order from 1-8-0 moving the '0' tile.\n" +
-                "You can only move one tile at a time. Cannot move diagonally.\n" +
-                "Click on a tile You wanna move then click on a tile where You wanna move it.");
-
-        alert.showAndWait();
-    }
-
-    /**
-     * Handles saving of the current state of the game.
-     * Calculates the time passed since the start of the game into the variable {@code currgametime}.
-     * After getting the correct values for {@code finish} {@code stepCount} and {@code currgametime} writes these datas to a json file.
-     *
-     * @param finish is the matrix representation of the values found on the buttons.
-     * @param stepCount is the value of {@code stepCountLabel} showing how many steps have been made.
-     * @param gameTime is the time passed since the start of the game.
-     * @param main is an instance of Main used to save the games state.
-     * @throws IOException throws exceptions.
-     */
-    public static void Mentes(int[] finish, int stepCount, long gameTime, Main main) throws IOException
-    {
-        long currgametime = System.nanoTime();
-
-        main.setNonStaticfinish(finish);
-        main.setNonStaticstepCount(stepCount);
-        main.setNonStaticgameTime(currgametime - gameTime);
-
-        fc.setDialogTitle("Save");
-        fc.showSaveDialog(null);
-        fc.requestFocus(true);
-
-        String file = fc.getSelectedFile().getAbsolutePath();
-
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        FileWriter writer = new FileWriter(file+".json");
-
-        gson.toJson(main,writer);
-
-        writer.close();
-    }
-
-    /**
-     * Handles loading the game from a saved state using a correctly saved json file.
-     * Sets the values of {@code finish} {@code gameTime} {@code stepCountLabel} {@code stepCount} and {@code button0} to {@code button8} to the correct value.
-     * @param main is an instance of Main used to save the games state.
-     * @throws FileNotFoundException throws exceptions.
-     */
-    public static void Betoltes(Main main) throws FileNotFoundException
-    {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-
-        fc.setDialogTitle("Load");
-        fc.showOpenDialog(null);
-        fc.requestFocus(true);
-
-        String file = fc.getSelectedFile().getAbsolutePath();
-
-        main = gson.fromJson(new FileReader(file), Main.class);
-
-        finish = main.getNonStaticfinish();
-        gameTime = main.getNonStaticgameTime();
-
-        stepCountLabel.setText("Step counter: " + main.getNonStaticstepCount());
-        stepCount = main.getNonStaticstepCount();
-
-        button0.setText(String.valueOf(finish[0]));
-        button1.setText(String.valueOf(finish[1]));
-        button2.setText(String.valueOf(finish[2]));
-        button3.setText(String.valueOf(finish[3]));
-        button4.setText(String.valueOf(finish[4]));
-        button5.setText(String.valueOf(finish[5]));
-        button6.setText(String.valueOf(finish[6]));
-        button7.setText(String.valueOf(finish[7]));
-        button8.setText(String.valueOf(finish[8]));
-    }
-
-    /**
-     * Handles the creation of {@code gamestat} for the end game (still not that end game) screen.
-     * @return {@code gamestat} the value of {@code gameTime} / {@code stepCount}, showing the average time between steps.
-     * @param gameTime time passed in ns.
-     * @param stepCount steps made.
-     */
-    public static double GameStat(long gameTime, int stepCount)
-    {
-        return Math.floor((gameTime /1_000_000_000.0 / 1000.0 /(double)stepCount) * 100) /100; //ms to s
-    }
-
     /*Just for testing purposes*/
 //    public static double asd(int a, int b){return a+b;}
 }

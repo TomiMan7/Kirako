@@ -33,13 +33,11 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     int[] nonStaticfinish = new int[9];
     /**Used to save the game time into json.*/
     long nonStaticgameTime = 0;
-    /**Stores the time the game was started.*/
-    static long gameTime =0;
+
 
     /**Keeps track how many button presses were made between steps.*/
     static int buttonPressCount = 0;
-    /**Keeps track how many steps were made.*/
-    static int stepCount = 0;
+
     /**Used to save the game step count into json.*/
     int nonStaticstepCount = 0;
     /**Stores witch button was pressed.*/
@@ -229,7 +227,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         mentes.setOnAction(e -> {
             try
             {
-                Controller.Mentes(finish, stepCount, gameTime, a);
+                Controller.Mentes(finish, Model.stepCount, Model.gameTime, a);
             }
             catch (IOException ex) {
                 ex.printStackTrace();
