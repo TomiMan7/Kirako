@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Controller class provides methods for Main.java to handle the events in {@code primaryStage}.
  */
-public class Controller extends Main{
+public class Controller extends Main {
 
     /**
      * Constructor for Controller
@@ -57,6 +57,8 @@ public class Controller extends Main{
         button6.setText(String.valueOf(list.get(6)));
         button7.setText(String.valueOf(list.get(7)));
         button8.setText(String.valueOf(list.get(8)));
+
+        Main.logger.info("New game has been started.");
     }
 
     /**
@@ -202,19 +204,24 @@ public class Controller extends Main{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Invalid step!");
                 alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
-
-                alert.showAndWait();;
+                Main.logger.error("Invalid step made");
+                alert.showAndWait();
             }
         }
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid step!");
             alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
+            Main.logger.error("Invalid step made");
 
             alert.showAndWait();
         }
     }
 
+
+    /*
+    * Adjust this function to lower the win threshold
+    * */
     /**
      * Checks if a win condition is presented on the buttons. If so it sets the values on {@code button0} to {@code button8} to the correct value. Shows the end game(not that end game) screen with some statistics
      */

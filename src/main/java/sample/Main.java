@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.swing.JFileChooser;
 
@@ -33,6 +35,10 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     int[] nonStaticfinish = new int[9];
     /**Used to save the game time into json.*/
     long nonStaticgameTime = 0;
+    /**
+     * A logger for loggin' them loggs in the loggs ^.^.
+     */
+    public static Logger logger = LoggerFactory.getLogger(Main.class);
 
 
     /**Keeps track how many button presses were made between steps.*/
@@ -139,7 +145,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
      * Sets the event handlers.
      * @param primaryStage is the window.
      */
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage)
+    {
         Main a = new Main();
         primaryStage.setTitle("8 Puzzle");
         primaryStage.setResizable(false);
@@ -208,14 +215,14 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         button8.setOnAction(this);
 
         Menu fileMenu = new Menu("_Game");
-        Menu sugoMenu = new Menu("Info");
+        Menu sugoMenu = new Menu("_How to Play");
         MenuBar menuBar = new MenuBar();
 
         MenuItem mentes = new MenuItem("Save...");
         mentes.setId("m");
         MenuItem betoltes = new MenuItem("Load...");
         betoltes.setId("b");
-        MenuItem sugo = new MenuItem("Info");
+        MenuItem sugo = new MenuItem("How to Play");
         sugo.setId("s");
 
         fileMenu.getItems().add(mentes);
