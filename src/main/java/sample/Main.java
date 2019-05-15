@@ -29,8 +29,8 @@ public class Main extends Application implements EventHandler<ActionEvent> {
     static final JFileChooser fc = new JFileChooser();
     /**Label for showing how many steps were made.*/
     static Label stepCountLabel = new Label("Step counter: ");
-    /**The matrix representation for the numbers on the buttons.*/
-    static int[] finish = new int[9];
+//    /**The matrix representation for the numbers on the buttons.*/
+//    static int[] finish = new int[9];
     /**Used to save the game status into json.*/
     int[] nonStaticfinish = new int[9];
     /**Used to save the game time into json.*/
@@ -234,7 +234,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         mentes.setOnAction(e -> {
             try
             {
-                Controller.Mentes(finish, Model.stepCount, Model.gameTime, a);
+                Controller.Mentes(Model.finish, Model.stepCount, Model.gameTime, a);
             }
             catch (IOException ex) {
                 ex.printStackTrace();
@@ -286,7 +286,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button0) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button0.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button0);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button0.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button0.getText();
@@ -297,7 +297,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button1) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button1.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button1);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button1.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button1.getText();
@@ -307,7 +307,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button2) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button2.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button2);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button2.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button2.getText();
@@ -317,7 +317,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button3) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button3.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button3);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button3.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button3.getText();
@@ -327,7 +327,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button4) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button4.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button4);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button4.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button4.getText();
@@ -337,7 +337,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button5) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button5.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button5);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button5.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button5.getText();
@@ -347,7 +347,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button6) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button6.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button6);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button6.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button6.getText();
@@ -357,7 +357,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button7) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button7.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button7);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button7.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button7.getText();
@@ -367,7 +367,7 @@ public class Main extends Application implements EventHandler<ActionEvent> {
         if (event.getSource() == button8) {
             if (buttonPressCount == 1) {
                 pressedButtonText1 = button8.getText();
-                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button8);
+                Controller.Csere(pressedButtonText0, pressedButtonText1, buttonId, button8.getId());
             } else {
                 buttonPressCount++;
                 pressedButtonText0 = button8.getText();

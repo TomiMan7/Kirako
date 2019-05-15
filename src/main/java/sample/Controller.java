@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import org.dom4j.rule.Mode;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -43,7 +44,7 @@ public class Controller extends Main {
         Collections.shuffle(list);
 
         for(int i = 0; i<9; i++)
-            finish[i] = list.get(i);
+            Model.finish[i] = list.get(i);
 
         Model.stepCount = 0;
 
@@ -128,48 +129,139 @@ public class Controller extends Main {
 
         main = gson.fromJson(new FileReader(file), Main.class);
 
-        finish = main.getNonStaticfinish();
+        Model.finish = main.getNonStaticfinish();
         Model.gameTime = main.getNonStaticgameTime();
 
         stepCountLabel.setText("Step counter: " + main.getNonStaticstepCount());
         Model.stepCount = main.getNonStaticstepCount();
 
-        button0.setText(String.valueOf(finish[0]));
-        button1.setText(String.valueOf(finish[1]));
-        button2.setText(String.valueOf(finish[2]));
-        button3.setText(String.valueOf(finish[3]));
-        button4.setText(String.valueOf(finish[4]));
-        button5.setText(String.valueOf(finish[5]));
-        button6.setText(String.valueOf(finish[6]));
-        button7.setText(String.valueOf(finish[7]));
-        button8.setText(String.valueOf(finish[8]));
+        button0.setText(String.valueOf(Model.finish[0]));
+        button1.setText(String.valueOf(Model.finish[1]));
+        button2.setText(String.valueOf(Model.finish[2]));
+        button3.setText(String.valueOf(Model.finish[3]));
+        button4.setText(String.valueOf(Model.finish[4]));
+        button5.setText(String.valueOf(Model.finish[5]));
+        button6.setText(String.valueOf(Model.finish[6]));
+        button7.setText(String.valueOf(Model.finish[7]));
+        button8.setText(String.valueOf(Model.finish[8]));
     }
 
+
+//    public static void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button)
+//    {
+//        buttonPressCount = 0;
+//        stepCountLabel.setText("Step counter: " + ++Model.stepCount);
+//
+//        if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 3)
+//        {
+//            if (pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
+//
+//                String temp;
+//                temp = String.valueOf(finish[Integer.valueOf(button.getId())]);
+//                finish[Integer.valueOf(button.getId())] = Integer.valueOf(pressedButtonText0);
+//                finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
+//
+//                button.setText(pressedButtonText0);
+//
+//                if (button0.getId() == buttonId)
+//                    button0.setText(pressedButtonText1);
+//
+//                if (button1.getId() == buttonId)
+//                    button1.setText(pressedButtonText1);
+//
+//                if (button2.getId() == buttonId)
+//                    button2.setText(pressedButtonText1);
+//
+//                if (button3.getId() == buttonId)
+//                    button3.setText(pressedButtonText1);
+//
+//                if (button4.getId() == buttonId)
+//                    button4.setText(pressedButtonText1);
+//
+//                if (button5.getId() == buttonId)
+//                    button5.setText(pressedButtonText1);
+//
+//                if (button6.getId() == buttonId)
+//                    button6.setText(pressedButtonText1);
+//
+//                if (button7.getId() == buttonId)
+//                    button7.setText(pressedButtonText1);
+//
+//                if (button8.getId() == buttonId)
+//                    button8.setText(pressedButtonText1);
+//
+//                Win();
+//            }
+//            else {
+//                Alert alert = new Alert(Alert.AlertType.ERROR);
+//                alert.setTitle("Invalid step!");
+//                alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
+//                Main.logger.error("Invalid step made");
+//                alert.showAndWait();
+//            }
+//        }
+//        else{
+//            Alert alert = new Alert(Alert.AlertType.ERROR);
+//            alert.setTitle("Invalid step!");
+//            alert.setContentText("You can't move diagonally, or use the '0' tile to move!");
+//            Main.logger.error("Invalid step made");
+//
+//            alert.showAndWait();
+//        }
+//    }
     /**
-     *Function Csere takes care of the switch of the numbers on clicked buttons, and calls fucntion win() to check if a win condition is present. Also warns if an invalid step has been made.
-     *Resets {@code buttonPressCount}.
-     *Sets {@code stepCountLabel} to the correct value.
+     * Calls Model.GombCsere() to handle the switch on the buttons, checks if a win condition is present. Also warns if an invalid step has been made.
+     * Resets {@code buttonPressCount}.
+     * Sets {@code stepCountLabel} to the correct value.
      *
      * @param pressedButtonText0 is the value on the first pressed button
      * @param pressedButtonText1 is the value on the second pressed button
      * @param buttonId is the first pressed button ID.
-     * @param button is the second button itself.
+     * @param buttonId2 is the second button itself.
      */
-    public static void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, Button button)
+    public static void Csere(String pressedButtonText0, String pressedButtonText1, String buttonId, /*Button button*/String buttonId2)
     {
         buttonPressCount = 0;
         stepCountLabel.setText("Step counter: " + ++Model.stepCount);
 
-        if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(button.getId()) ) == 3)
+        if( Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(buttonId2/*button.getId()*/) ) == 1 ||  Math.abs( Integer.valueOf(buttonId) - Integer.valueOf(/*button.getId()*/buttonId2) ) == 3)
         {
             if (pressedButtonText0.equals("0") || pressedButtonText1.equals("0")) {
 
-                String temp;
-                temp = String.valueOf(finish[Integer.valueOf(button.getId())]);
-                finish[Integer.valueOf(button.getId())] = Integer.valueOf(pressedButtonText0);
-                finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
+                Model.GombCsere(pressedButtonText0, pressedButtonText1, buttonId, buttonId2);
+//                String temp;
+//                temp = String.valueOf(finish[Integer.valueOf(/*button.getId()*/buttonId2)]);
+//                finish[Integer.valueOf(buttonId2/*button.getId() */)] = Integer.valueOf(pressedButtonText0);
+//                finish[Integer.valueOf(buttonId)] = Integer.valueOf(temp);
 
-                button.setText(pressedButtonText0);
+//                button.setText(pressedButtonText0);
+
+                if (button0.getId() == buttonId2)
+                    button0.setText(pressedButtonText0);
+
+                if (button1.getId() == buttonId2)
+                    button1.setText(pressedButtonText0);
+
+                if (button2.getId() == buttonId2)
+                    button2.setText(pressedButtonText0);
+
+                if (button3.getId() == buttonId2)
+                    button3.setText(pressedButtonText0);
+
+                if (button4.getId() == buttonId2)
+                    button4.setText(pressedButtonText0);
+
+                if (button5.getId() == buttonId2)
+                    button5.setText(pressedButtonText0);
+
+                if (button6.getId() == buttonId2)
+                    button6.setText(pressedButtonText0);
+
+                if (button7.getId() == buttonId2)
+                    button7.setText(pressedButtonText0);
+
+                if (button8.getId() == buttonId2)
+                    button8.setText(pressedButtonText0);
 
                 if (button0.getId() == buttonId)
                     button0.setText(pressedButtonText1);
@@ -218,7 +310,6 @@ public class Controller extends Main {
         }
     }
 
-
     /*
     * Adjust this function to lower the win threshold
     * */
@@ -230,7 +321,7 @@ public class Controller extends Main {
         int win = 0;
 
         for(int i = 0; i < /*finish.length - 1*/2; i++) //adjust this for lowering the win threshold
-            if(finish[i] == i+1)
+            if(Model.finish[i] == i+1)
                 win++;
 
         if(win == /*finish.length - 1*/2) //adjust this for lowering the win threshold
@@ -238,8 +329,8 @@ public class Controller extends Main {
             alert.setTitle("You won!");
             alert.setHeight(150);
             alert.setContentText("You won! Steps needed: " + Model.stepCount + "\nAvarage sec. between steps: " + Model.GameStat(Model.gameTime,Model.stepCount));
-//            System.out.println(gameTime);
-//            System.out.println(GameStat(gameTime,stepCount));
+//            System.out.println(Model.gameTime); //prints the exact time that it took to finish the game
+//            System.out.println(Model.GameStat(Model.gameTime,Model.stepCount));
             button0.setText("You won!");
             button1.setText("You won!");
             button2.setText("You won!");

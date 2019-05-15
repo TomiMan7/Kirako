@@ -24,7 +24,9 @@ public class ModelTest {
      */
     @Test
     void gameStat() {
-        Assert.assertEquals( 0.055,Model.GameStat((long)6678110087991.0, 12));
+        Assert.assertEquals( 1.8,Model.GameStat((long)3523645814005.0, 19));
+        Assert.assertEquals(1.7, Model.GameStat((long)3598610524161.0, 20));
+        Assert.assertEquals(4.0, Model.GameStat((long)3672732534145.0, 9));
     }
 
     /**
@@ -37,6 +39,3 @@ public class ModelTest {
         c.gameStat();
     }
 }
-//gomb nyomas loggolas stb
-
-//gitignore: intellij ALL kell!
